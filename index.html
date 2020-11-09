@@ -1,12 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    
-</body>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="reset.css" />
+  </head>
+  <body>
+    <form id="form">
+      <div class="form-wrapper">
+        <label for="title">Title</label><br />
+        <input type="text" id="title" /><br />
+      </div>
+      <div class="form-wrapper">
+        <label for="author">Author</label><br />
+        <input type="text" id="author" /><br />
+      </div>
+      <div class="form-wrapper">
+        <label for="pages">Page no</label><br />
+        <input type="number" id="pages" /><br />
+      </div>
+      <div class="form-wrapper">
+        <input type="checkbox" id="read" />
+        <label for="read">read</label><br />
+      </div>
+      <input type="submit" id="submit" value="submit" />
+    </form>
+    <div id="display"></div>
+
+    <!-- <label for="finished">Read</label>
+    <input type="checkbox " id="finished"> -->
+
+    <script>
+      let form = document.querySelector("#form");
+      let display = document.querySelector("#display");
+      let books = JSON.parse(localStorage.getItem("items"))||[];
+
+      // prettier-ignore
+      function poppulateDisplay(anyArray=[],destination) {
+           destination.innerHTML = anyArray.map((item,i)=>{
+               return `
+        <div class="folder" data-index=${i}>
+        <div>${item.title}</div>
+        <div>${item.author}</div>
+        <div>${item.pages}</div>
+        <div>${item.read}</div>
+        <button class="delete">delete</button>
+        </div>
+               `;
+           }).join(""); 
+        }
+
+      function bookList(e) {
+        e.preventDefault();
+        let title = this.querySelector("[id=title]").value;
+        let author = this.querySelector("[id=author]").value;
+        let pages = this.querySelector("[id=pages]").value;
+        let checkvalue = this.querySelector("[id=read]");
+        let read = checkvalue.checked ? true : false;
+        let book = {
+          title,
+          author,
+          pages,
+          read,
+        };
+        books.push(book);
+        localStorage.setItem("items",JSON.stringify(books));
+        poppulateDisplay(books, display);
+        this.reset();false
+      }
+
+      function deleteFolder(e){
+        //   if(!e.target.matches("button")) return
+          let el = e.target;
+          let index = el.parent;
+          console.log(index);
+      }
+
+
+      form.addEventListener("submit", bookList);
+      display.addEventListener("click", deleteFolder);
+      poppulateDisplay(books, display);
+    </script>
+  </body>
 </html>
