@@ -5,99 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="reset.css" />
   </head>
   <body>
+    <header>
+    <button id="add">Add</button>
+    <div class="overlay invisibility ">
     <form id="form">
-      <div class="form-wrapper">
-        <label for="title">Title</label><br />
-        <input type="text" id="title" /><br />
-      </div>
-      <div class="form-wrapper">
-        <label for="author">Author</label><br />
-        <input type="text" id="author" /><br />
-      </div>
-      <div class="form-wrapper">
-        <label for="pages">Page no</label><br />
-        <input type="number" id="pages" /><br />
-      </div>
-      <div class="form-wrapper">
+      <label for="title"
+        >Title
+        <input type="text" id="title" placeholder="Enter Title"  />
+      </label>
+      <label for="author"
+        >Author
+        <input type="text" id="author"  placeholder="Enter Author Name"  />
+      </label>
+      <label for="pages"
+        >Page no
+        <input type="number" id="pages"  placeholder="Enter No of Pages"   />
+      </label>
+      <div id="check-wrapper">
         <input type="checkbox" id="read" />
         <label for="read">read</label><br />
       </div>
       <input type="submit" id="submit" value="submit" />
     </form>
-    <div id="display"></div>
-
-    <script>
-      let form = document.querySelector("#form");
-      let display = document.querySelector("#display");
-      let books = JSON.parse(localStorage.getItem("items")) || [];
-
-      // prettier-ignore
-      function poppulateDisplay(anyArray=[],destination) {
-           destination.innerHTML = anyArray.map((item,i)=>{
-               return `
-        <div class="folder" data-index=${i}>
-        <div>${item.title}</div>
-        <div>${item.author}</div>
-        <div>${item.pages}</div>
-        <div class="${item.read} toggle">${item.read}</div>
-        <button class="delete">delete</button>
-        </div>
-               `;
-           }).join(""); 
-        }
-
-      function bookList(e) {
-        e.preventDefault();
-        let title = this.querySelector("[id=title]").value;
-        let author = this.querySelector("[id=author]").value;
-        let pages = this.querySelector("[id=pages]").value;
-        let checkvalue = this.querySelector("[id=read]");
-        let read = checkvalue.checked ? "read" : "no-read";
-        let book = {
-          title,
-          author,
-          pages,
-          read,
-        };
-        books.push(book);
-        localStorage.setItem("items", JSON.stringify(books));
-        poppulateDisplay(books, display);
-        this.reset();
-        false;
-      }
-
-      function deleteFolder(e) {
-        if (!e.target.matches("button")) return;
-        let el = e.target;
-        let index = el.parentNode.dataset.index;
-        books.splice(index, 1);
-        localStorage.setItem("items", JSON.stringify(books));
-        poppulateDisplay(books, display);
-      }
-
-      function toogleDone(e) {
-        if (!e.target.matches(".toggle")) return;
-        let el = e.target;
-        let index = el.parentNode.dataset.index;
-        if (books[index].read === "read") {
-          books[index].read = "no-read";
-          localStorage.setItem("items", JSON.stringify(books));
-          return poppulateDisplay(books, display);
-        }
-        if (books[index].read === "no-read") {
-          books[index].read = "read";
-          localStorage.setItem("items", JSON.stringify(books));
-          return poppulateDisplay(books, display);
-        }
-      }
-
-      form.addEventListener("submit", bookList);
-      display.addEventListener("click", deleteFolder);
-      display.addEventListener("click", toogleDone);
-      poppulateDisplay(books, display);
-    </script>
+  </div>
+</header> 
+    <section>
+      <div id="display" class="flex"></div>
+    </section>
+   <script src="script.js"></script> 
   </body>
 </html>
