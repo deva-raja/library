@@ -70,6 +70,12 @@ input[type="number"] {
     display: flex;
     flex-wrap: wrap;
 }
-.delete{
+.delete:hover{
     background-color: rgb(233, 11, 11);
+}
+.no-read{
+  background-color: rgb(206, 18, 18);
+}
+.read{
+  background-color: rgba(15, 218, 15, 0.801);
 }

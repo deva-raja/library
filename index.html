@@ -29,13 +29,10 @@
     </form>
     <div id="display"></div>
 
-    <!-- <label for="finished">Read</label>
-    <input type="checkbox " id="finished"> -->
-
     <script>
       let form = document.querySelector("#form");
       let display = document.querySelector("#display");
-      let books = JSON.parse(localStorage.getItem("items"))||[];
+      let books = JSON.parse(localStorage.getItem("items")) || [];
 
       // prettier-ignore
       function poppulateDisplay(anyArray=[],destination) {
@@ -45,7 +42,7 @@
         <div>${item.title}</div>
         <div>${item.author}</div>
         <div>${item.pages}</div>
-        <div>${item.read}</div>
+        <div class="${item.read} toggle">${item.read}</div>
         <button class="delete">delete</button>
         </div>
                `;
@@ -58,7 +55,7 @@
         let author = this.querySelector("[id=author]").value;
         let pages = this.querySelector("[id=pages]").value;
         let checkvalue = this.querySelector("[id=read]");
-        let read = checkvalue.checked ? true : false;
+        let read = checkvalue.checked ? "read" : "no-read";
         let book = {
           title,
           author,
@@ -66,21 +63,40 @@
           read,
         };
         books.push(book);
-        localStorage.setItem("items",JSON.stringify(books));
+        localStorage.setItem("items", JSON.stringify(books));
         poppulateDisplay(books, display);
-        this.reset();false
+        this.reset();
+        false;
       }
 
-      function deleteFolder(e){
-        //   if(!e.target.matches("button")) return
-          let el = e.target;
-          let index = el.parent;
-          console.log(index);
+      function deleteFolder(e) {
+        if (!e.target.matches("button")) return;
+        let el = e.target;
+        let index = el.parentNode.dataset.index;
+        books.splice(index, 1);
+        localStorage.setItem("items", JSON.stringify(books));
+        poppulateDisplay(books, display);
       }
 
+      function toogleDone(e) {
+        if (!e.target.matches(".toggle")) return;
+        let el = e.target;
+        let index = el.parentNode.dataset.index;
+        if (books[index].read === "read") {
+          books[index].read = "no-read";
+          localStorage.setItem("items", JSON.stringify(books));
+          return poppulateDisplay(books, display);
+        }
+        if (books[index].read === "no-read") {
+          books[index].read = "read";
+          localStorage.setItem("items", JSON.stringify(books));
+          return poppulateDisplay(books, display);
+        }
+      }
 
       form.addEventListener("submit", bookList);
       display.addEventListener("click", deleteFolder);
+      display.addEventListener("click", toogleDone);
       poppulateDisplay(books, display);
     </script>
   </body>
