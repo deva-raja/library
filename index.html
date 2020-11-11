@@ -4,36 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
+    <script src="https://kit.fontawesome.com/e006cf33e3.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <i class="fas deleteAll fa-stop-circle">
+    </i>
+    <span class=" delete-text">Delete all</span>
+    
+    <div id="heading-wrapper">
+      <h1 id="heading">Library</h1>
+      <div id="underline"></div>
+    </div>
     <header>
-    <button id="add">Add</button>
-    <div class="overlay invisibility ">
-    <form id="form">
-      <label for="title"
-        >Title
-        <input type="text" id="title" placeholder="Enter Title"  />
-      </label>
-      <label for="author"
-        >Author
-        <input type="text" id="author"  placeholder="Enter Author Name"  />
-      </label>
-      <label for="pages"
-        >Page no
-        <input type="number" id="pages"  placeholder="Enter No of Pages"   />
-      </label>
-      <div id="check-wrapper">
-        <input type="checkbox" id="read" />
-        <label for="read">read</label><br />
+      <button id="add">+</button>
+    <span class=" add-text">Add Book</span>
+      <div class="overlay invisibility">
+        <form id="form">
+        <i class="fas fa-times delete-form"></i>
+          <label for="title"
+            >Title
+            <input type="text" id="title" placeholder="Enter Title" required/>
+          </label>
+          <label for="author"
+            >Author
+            <input type="text" id="author" placeholder="Enter Author Name" required/>
+          </label>
+          <label for="pages"
+            >Page no
+            <input type="number" id="pages" placeholder="Enter No of Pages" required/>
+          </label>
+          <div id="check-wrapper">
+            <input type="checkbox" id="read" />
+            <label for="read">Finished</label><br />
+          </div>
+          <input type="submit" id="submit" value="submit" />
+        </form>
       </div>
-      <input type="submit" id="submit" value="submit" />
-    </form>
-  </div>
-</header> 
+    </header>
     <section>
       <div id="display" class="flex"></div>
     </section>
-   <script src="script.js"></script> 
+    <script src="script.js"></script>
   </body>
 </html>
